@@ -1,0 +1,16 @@
+{
+  "name": "nodepractice",
+  "version": "1.0.0",
+  "description": "for node practice",
+  "main": "Practice.js",
+  "scripts": {
+    "test": "test",
+    "start": "nodemon Practice.js",
+    "start-server": "nodemon Practice.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

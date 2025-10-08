@@ -5,12 +5,16 @@
   "main": "Practice.js",
   "scripts": {
     "test": "test",
-    "start": "nodemon Practice.js",
+    "start": "nodemon express.js",
     "start-server": "nodemon Practice.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0"
   }
 }

@@ -1,6 +1,11 @@
 const express = require('express');
+const validator = require('../Utils/ValidationSchema');
+const {validationResult, matchedData, checkSchema} = require('express-validator');
+const userValidation = require('../Utils/UserSchema');
+// import { validationResult, matchedData, checkSchema } from 'express-validator';
 
 const route = express.Router();
+const middleWareFunction = require('../ServiceLayer');
 
 const obj = [{id: 1, name:"vignesh", location: "chennai"},
 {id: 2, name:"kumar", location: "Delhi"},
@@ -39,9 +44,43 @@ route.get("/getbyQueryParam", (req, res, next) => {
     return res.status(500).send("Invalid Input");
 })
 
-route.post("/postMainContent", (req, res, next) => {
-    console.log(req.body);
-    res.send("Values inserted succesfully");
+route.post("/postMainContent", checkSchema(validator), (req, res, next) => {
+    const result = validationResult(req);
+    console.log(result);
+    if(!result.isEmpty()){
+         return res.status(400).send({error:result.array()});
+    }
+    const body = matchedData(req);
+    console.log("The final output", body);
+    console.log(req['express-validator#contexts']);
+    res.send("Values inserted succesfully");    
+})
+
+route.post("/insertUserData", checkSchema(userValidation),(req, res, next) => {
+    console.log(req['express-validator#contexts']);
+    const output = validationResult(req);
+    if(!output.isEmpty()){
+        return res.status(500).send({error: output.array()});
+    }
+    const sample = matchedData(req);
+    console.log("The result output was", sample);
+    res.send("The user inserted successfully");
+})
+
+route.patch("/api/user/:id", middleWareFunction, (req, res) => {
+    const index = req.indexvalue;
+    const newobj = req.obj;
+    console.log(newobj);
+    res.send("working");
+})
+
+
+route.patch("/api/userSample/:id", middleWareFunction, (req, res) => {
+//    const decodedId = Buffer.from(encodedId, "base64").toString("utf-8");
+    const index = req.indexvalue;
+    const newobj = req.obj;
+    console.log(newobj);
+    res.send("working");
 })
 
 module.exports = route;

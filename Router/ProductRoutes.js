@@ -1,5 +1,6 @@
 const express = require('express');
 const productRoute = express.Router();
+const middle  = require('../MiddleWare');
 
 const products = [{id: 1, name: "cpu", price: 1000},
 
@@ -12,10 +13,11 @@ productRoute.get("/getProducts", (req, res, next) => {
     res.send(products);
 })
 
-productRoute.get("/getroductByid/:id", (req, res, next)=> {
-    const id = parseInt(req.params.id);
-    console.log(req.params.id);
-
+productRoute.get("/getroductByid/:id", middle, (req, res, next)=> {
+    // const id = parseInt(req.params.id);
+    // console.log(req.params.id);
+    const id = req.parsedId;
+    console.log("The new id is ",id);
     if(isNaN(id)){
         return res.status(500).send("The entereed input is invalid please enter correct input");
     }
